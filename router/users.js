@@ -4,18 +4,37 @@ const router =express.Router()
 
 let users = [
     {id : 1, nama : "Bimo", email : "bimorhfdz@Gmail.com"},
-    {id : 2, nama : "Adit", email : "aditya@Gmail.com"},
-    {id : 3, nama : "Zarine", email : "zarine@Gmail.com"}
+    {id : 2, nama : "rahman", email : "rahman@Gmail.com"},
+    {id : 3, nama : "hafidz", email : "hafidz@Gmail.com"}
 ]
 
 
   router.get('/users', (req, res) => {
+    if(users.length> 0){
+      res.json({
+        status: true,
+        data: users,
+        method: req.method,
+        url: req.url
+      })
+    }else{
+      res.json({
+        status:false,
+        message:"data kosong"
+      })
+    }
     res.json (users)
   })
   
   router.post('/user', (req, res) => {
     users.push(req.body)
-    res.json(users)
+    res.json({
+      status: true,
+      data: users,
+      method: req.method,
+      url: req.url,
+      message:"data berhasil ditambahkan"
+    })
   })
   
   router.put('/user/:id', (req, res) => {
@@ -27,14 +46,26 @@ let users = [
             return user
         }
     })
-    res.json(users)
+    res.json({
+      status: true,
+      data: users,
+      method: req.method,
+      url: req.url,
+      message:"data berhasil diubah"
+    })
   })
   
   router.delete('/user/:id', (req, res) => {
     const id = req.params.id
     users = users.filter(user => user.id != id)
 
-    res.json(users)
+    res.json({
+      status: true,
+      data: users,
+      method: req.method,
+      url: req.url,
+      message: "data berhasil dihapus"
+    })
   })
   
 
