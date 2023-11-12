@@ -4,7 +4,9 @@ const router =express.Router()
 const usercontroller = require("../controllers/user")
 
   router.get('/users', usercontroller.index)
-  
+
+  router.get('/users/:id', usercontroller.show)
+
   router.post('/user', usercontroller.store)
   
   router.put('/user/:id', usercontroller.update)
