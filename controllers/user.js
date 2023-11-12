@@ -20,35 +20,41 @@ module.exports = {
     } catch(error){
       res.status(400).json({succes: false})
     }
-        
-        res.json (users)
+        // res.json (users)
+
       },
-      store: (req, res) => {
-        users.push(req.body)
-        res.json({
-          status: true,
-          data: users,
-          method: req.method,
-          url: req.url,
-          message:"data berhasil ditambahkan"
-        })
+      store: async (req, res) => {
+        try{
+          const user = await User.create(req.body)
+          res.status(200).json({
+            status: true,
+            data: users,
+            method: req.method,
+            url: req.url,
+            message:"data berhasil ditambahkan"
+          })
+        } catch (error) {
+          res.status(400).json({succes: false})
+        }
       },
-      update: (req, res) => {
+      update: async (req, res) => {
+        try{
+          const user = await User.findByIdAndUpdate(req.params.id, req.body, {
+            new : true,
+            runValidators: true
+          })
+          res.json({
+            status: true,
+            data: users,
+            method: req.method,
+            url: req.url,
+            message:"data berhasil diubah"
+          })
+        }catch(error){
+          res.status(400).json({succes: false})
+        }
         const id = req.params.id
-        users.filter(user => {
-            if(user.id == id){
-                user.nama = req.body.nama
-                user.email = req.body.email
-                return user
-            }
-        })
-        res.json({
-          status: true,
-          data: users,
-          method: req.method,
-          url: req.url,
-          message:"data berhasil diubah"
-        })
+        
       },
       delete:  (req, res) => {
         const id = req.params.id
@@ -56,7 +62,7 @@ module.exports = {
     
         res.json({
           status: true,
-          data: users,
+          data: user,
           method: req.method,
           url: req.url,
           message: "data berhasil dihapus"
