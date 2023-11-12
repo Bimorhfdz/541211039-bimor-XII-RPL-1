@@ -1,13 +1,11 @@
-let users = [
-    {id : 1, nama : "Bimo", email : "bimorhfdz@Gmail.com"},
-    {id : 2, nama : "rahman", email : "rahman@Gmail.com"},
-    {id : 3, nama : "hafidz", email : "hafidz@Gmail.com"}
-]
+const User = require('../models/User')
 
 module.exports = {
-    index: (req, res) => {
+    index: async (req, res) => { 
+      try{
+        const users = await User.find()
         if(users.length> 0){
-          res.json({
+          res.status(200).json({
             status: true,
             data: users,
             method: req.method,
@@ -19,6 +17,10 @@ module.exports = {
             message:"data kosong"
           })
         }
+    } catch(error){
+      res.status(400).json({succes: false})
+    }
+        
         res.json (users)
       },
       store: (req, res) => {
