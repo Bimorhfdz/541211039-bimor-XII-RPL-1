@@ -1,5 +1,5 @@
-const express = require('express')
-const router =express.Router()
+const express = require('express') 
+const router =express.Router() //menggunakan modul express untuk membuat router dan di simpan di variable router
   
 const usercontroller = require("../controllers/user")
 
